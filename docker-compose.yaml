@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  backend:
+    build: ./server
+    container_name: fitchain-backend
+    restart: always
+    environment:
+      PORT: 3000
+      DB_HOST: database-1.cly2uw4ag4l8.ap-south-1.rds.amazonaws.com
+      DB_PORT: 5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: FitChain123!
+      FRONTEND_URL: http://frontend-alb-422311577.ap-south-1.elb.amazonaws.com
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./web
+      args:
+        VITE_API_URL: http://backend-alb-1678937263.ap-south-1.elb.amazonaws.com
+    container_name: fitchain-frontend
+    restart: always
+    ports:
+      - "80:80"
