@@ -57,7 +57,7 @@ export default function RegistrationForm({ selectedPlan }: Props) {
     try {
       const payload: RegisterPayload = { ...form, planId: selectedPlan };
       const { data } = await axios.post<RegisterResponse>(
-        "/api/register",
+        `${import.meta.env.VITE_API_URL || ""}/api/register`,
         payload,
       );
       setStatus(data.success ? "success" : "error");
